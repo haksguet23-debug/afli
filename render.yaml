@@ -1,0 +1,27 @@
+services:
+  n8n:
+    type: web
+    env:
+      N8N_BASIC_AUTH_ACTIVE: true
+      N8N_BASIC_AUTH_USER: admin
+      N8N_BASIC_AUTH_PASSWORD: affilmax2024
+      DB_TYPE: postgresdb
+      N8N_AMAZON_TAG: confortbure07-21
+      N8N_WEBHOOK_URL: https://affilmax-n8n.onrender.com
+    plan: free
+    region: oregon
+    buildCommand: docker build -t n8n .
+    runCommand: docker run -p 5678:5678 n8n
+    healthCheckPath: /healthz
+    healthCheckInterval: 10
+    healthCheckTimeout: 5
+    restartPolicy: always
+    databases:
+      - postgres
+
+databases:
+  postgres:
+    type: postgres
+    version: 14
+    plan: free
+    region: oregon
