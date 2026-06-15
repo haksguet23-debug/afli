@@ -1,27 +1,42 @@
-services:
-  n8n:
-    type: web
-    env:
-      N8N_BASIC_AUTH_ACTIVE: true
-      N8N_BASIC_AUTH_USER: admin
-      N8N_BASIC_AUTH_PASSWORD: affilmax2024
-      DB_TYPE: postgresdb
-      N8N_AMAZON_TAG: confortbure07-21
-      N8N_WEBHOOK_URL: https://affilmax-n8n.onrender.com
+﻿services:
+  - type: web
+    name: affilmax-n8n
+    env: docker
+    image:
+      url: docker.io/n8nio/n8n:latest
     plan: free
     region: oregon
-    buildCommand: docker build -t n8n .
-    runCommand: docker run -p 5678:5678 n8n
-    healthCheckPath: /healthz
-    healthCheckInterval: 10
-    healthCheckTimeout: 5
-    restartPolicy: always
-    databases:
-      - postgres
+    envVars:
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: affilmax2024
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESDB_HOST
+        fromDatabase:
+          name: affilmax-postgres
+          property: host
+      - key: DB_POSTGRESDB_PORT
+        fromDatabase:
+          name: affilmax-postgres
+          property: port
+      - key: DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: affilmax-postgres
+          property: database
+      - key: DB_POSTGRESDB_USER
+        fromDatabase:
+          name: affilmax-postgres
+          property: user
+      - key: DB_POSTGRESDB_PASSWORD
+        fromDatabase:
+          name: affilmax-postgres
+          property: password
 
 databases:
-  postgres:
-    type: postgres
-    version: 14
+  - name: affilmax-postgres
     plan: free
     region: oregon
