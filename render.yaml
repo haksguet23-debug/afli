@@ -1,4 +1,4 @@
-﻿services:
+services:
   - type: web
     name: affilmax-n8n
     env: docker
@@ -13,6 +13,10 @@
         value: admin
       - key: N8N_BASIC_AUTH_PASSWORD
         value: affilmax2024
+      - key: GROQ_API_KEY
+        sync: false
+      - key: N8N_AMAZON_TAG
+        value: confortbure07-21
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_HOST
